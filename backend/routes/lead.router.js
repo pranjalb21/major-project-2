@@ -5,6 +5,7 @@ import {
     getLeads,
     updateLead,
 } from "../apis/lead.methods.js";
+import { addComment, getComments } from "../apis/comment.methods.js";
 
 export const router = express.Router();
 
@@ -13,4 +14,6 @@ router
     .post("/", createLead)
     .get("/", getLeads)
     .put("/:id", updateLead)
-    .delete("/:id", deleteLead);
+    .delete("/:id", deleteLead)
+    .post("/:id/comments", addComment)
+    .get("/:id/comments", getComments);

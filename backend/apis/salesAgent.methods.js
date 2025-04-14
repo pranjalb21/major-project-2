@@ -1,5 +1,6 @@
-import SalesAgent from "../models/salesAgent.models";
-import salesAgentSchema from "../utils/validators/salesAgent.schema";
+import { z } from "zod";
+import SalesAgent from "../models/salesAgent.models.js";
+import salesAgentSchema from "../utils/validators/salesAgent.schema.js";
 
 export const createSalesAgent = async (req, res) => {
     try {

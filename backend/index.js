@@ -15,8 +15,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 import { router as leadRouter } from "./routes/lead.router.js";
+import { router as salesAgentRouter } from "./routes/salesAgent.router.js";
+import { router as reportRouter } from "./routes/report.router.js";
 
 app.use("/api/v1/leads", leadRouter);
+app.use("/api/v1/agents", salesAgentRouter);
+app.use("/api/v1/reports", reportRouter);
 
 initializeDB();
 app.listen(PORT, () => {

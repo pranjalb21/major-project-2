@@ -116,21 +116,26 @@ export const updateLead = async (req, res) => {
             });
         }
 
+        if (parsedData.status === "Closed") {
+            parsedData.closedAt = new Date();
+        }
         // Update lead
-        const updatedLead = await Lead.findByIdAndUpdate(id, parsedData);
+        const updatedLead = await Lead.findByIdAndUpdate(id, parsedData, {
+            new: true,
+        });
 
         // Check if Lead is updated
         if (!updatedLead) {
             return res.status(400).json({ error: "Unable to post lead info." });
         }
 
-        // Populate salesAgent details in the new lead
+        // Populate salesAgent details in the updated lead
         const newLead = await updatedLead.populate({
             path: "salesAgent",
             select: "_id name",
         });
 
-        res.status(201).json({
+        res.status(200).json({
             message: "Lead info updated.",
             data: newLead,
         });
