@@ -64,7 +64,13 @@ export const getLeads = async (req, res) => {
         }
 
         if (status) {
-            query.status = status;
+            if (status !== "All") {
+                query.status = status;
+            } else {
+                query.status = { $ne: "Closed" };
+            }
+        } else {
+            query.status = { $ne: "Closed" };
         }
 
         if (tags) {
@@ -75,12 +81,7 @@ export const getLeads = async (req, res) => {
             query.source = source;
         }
 
-        const agents = await Lead.find(query);
-
-        // Check if any agents matched the query.
-        if (!agents.length) {
-            return res.status(404).json({ error: "Lead not found." });
-        }
+        const agents = await Lead.find(query).populate("salesAgent");
 
         // Return the list of agents.
         return res.status(200).json({ data: agents });
@@ -173,6 +174,39 @@ export const deleteLead = async (req, res) => {
         });
     } catch (error) {
         console.error("Error in DELETE /:", error);
+        res.status(500).json({
+            error: "Internal server error.",
+            details: error.message,
+        });
+    }
+};
+
+export const getLeadStatusCount = async (req, res) => {
+    try {
+        // ["New", "Contacted", "Qualified", "Proposal Sent", "Closed"
+        const newLeads = await Lead.countDocuments({ status: "New" });
+        const contactedLeads = await Lead.countDocuments({
+            status: "Contacted",
+        });
+        const qualifiedLeads = await Lead.countDocuments({
+            status: "Qualified",
+        });
+        const proposalSentLeads = await Lead.countDocuments({
+            status: "Proposal Sent",
+        });
+        const closedLeads = await Lead.countDocuments({ status: "Closed" });
+        res.status(200).json({
+            message: "Lead status count fetched.",
+            data: {
+                newLeads,
+                contactedLeads,
+                qualifiedLeads,
+                proposalSentLeads,
+                closedLeads,
+            },
+        });
+    } catch (error) {
+        console.error("Error in GET /lead-status-count:", error);
         res.status(500).json({
             error: "Internal server error.",
             details: error.message,

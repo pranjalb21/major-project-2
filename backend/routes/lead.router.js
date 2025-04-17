@@ -3,6 +3,7 @@ import {
     createLead,
     deleteLead,
     getLeads,
+    getLeadStatusCount,
     updateLead,
 } from "../apis/lead.methods.js";
 import { addComment, getComments } from "../apis/comment.methods.js";
@@ -16,4 +17,5 @@ router
     .put("/:id", updateLead)
     .delete("/:id", deleteLead)
     .post("/:id/comments", addComment)
-    .get("/:id/comments", getComments);
+    .get("/:id/comments", getComments)
+    .get("/statuscount", getLeadStatusCount)
