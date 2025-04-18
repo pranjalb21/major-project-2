@@ -1,4 +1,3 @@
-
 .sidebar-list {
     padding-inline-start: 0;
     width: 10rem;
@@ -12,9 +11,11 @@
     cursor: pointer;
     width: 100%;
     background-color: none;
+    margin-top: 1rem;
 }
 .sidebar-list-item:hover {
     background-color: #f0f0f0;
+    border-radius: 0.2rem;
 }
 .sidebar-list a {
     color: black;
@@ -33,15 +34,24 @@
 .list-lead-status-item:first-child {
     padding-left: 0;
 }
-.sidebar-list .active .sidebar-list-item{
+.sidebar-list .active .sidebar-list-item {
     color: rgb(241, 46, 46);
+    border-radius: 0.2rem;
     background-color: #f0f0f0;
     font-weight: bold;
 }
-.card{
+.card {
     min-width: 40rem;
 }
 .row {
     margin-right: 0;
     margin-left: 0;
-  }
+}
+.link-hover {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.link-hover:hover {
+    text-decoration: underline;
+}

@@ -10,6 +10,7 @@ export default useLead;
 export const LeadProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [leadList, setLeadList] = useState([]);
+    const [selectedLead, setSelectedLead] = useState(null);
     const [agentList, setAgentList] = useState([]);
     const [leadStatusCount, setLeadStatusCount] = useState({
         newLeads: 0,
@@ -72,6 +73,25 @@ export const LeadProvider = ({ children }) => {
             });
     };
 
+    const fetchLead = async (id) => {
+        setLoading(true);
+        setSelectedLead(null);
+        const lead = await fetch(`${base_url}/leads/get/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setSelectedLead(data.data);
+                return data.data;
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+        return lead;
+    };
+
     const fetchAgents = async () => {
         setLoading(true);
         setAgentList([]);
@@ -79,6 +99,7 @@ export const LeadProvider = ({ children }) => {
             .then((res) => res.json())
             .then((data) => {
                 setAgentList(data.data);
+                // console.log(data.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -87,6 +108,77 @@ export const LeadProvider = ({ children }) => {
                 setLoading(false);
             });
     };
+
+    const addLead = async (leadData) => {
+        setLoading(true);
+        // console.log(leadData);
+        await fetch(`${base_url}/leads`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(leadData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setLeadList((prev) => [...prev, data.data]);
+                // console.log(data.data);
+                fetchLeadStatusCount();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    const updateLead = async (id, leadData) => {
+        setLoading(true);
+
+        await fetch(`${base_url}/leads/update/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(leadData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setLeadList((prev) =>
+                    prev.map((lead) => (lead._id === id ? data.data : lead))
+                );
+                fetchLeadStatusCount();
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    const deleteLead = async (id) => {
+        setLoading(true);
+        await fetch(`${base_url}/leads/${id}`, {
+            method: "DELETE",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setLeadList((prev) =>
+                    prev.filter((lead) => lead._id !== id)
+                );
+                fetchLeadStatusCount();
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
 
     useEffect(() => {
         fetchLeadStatusCount();
@@ -105,6 +197,11 @@ export const LeadProvider = ({ children }) => {
                 sidebarList,
                 fetchAgents,
                 agentList,
+                fetchLead,
+                selectedLead,
+                addLead,
+                updateLead,
+                deleteLead
             }}
         >
             {children}

@@ -32,8 +32,8 @@ export default function Agents() {
                                                     Email: {agent.email}
                                                 </p>
                                                 <p className="card-text">
-                                                    Phone: {agent.phone}
-                                                </p>
+                                                    Email: {agent.email}
+           ``                                     </p>
                                             </div>
                                         </div>
                                     </div>

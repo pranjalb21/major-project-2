@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useLead from "../contexts/Lead.context";
 import { base_url } from "../constants/constants";
 import MobileSidebar from "../components/MobileSidebar";
@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 
 export default function Dashboard() {
+    const navigate = useNavigate();
     const {
         leadList,
         loading,
@@ -20,7 +21,7 @@ export default function Dashboard() {
     } = useLead();
 
     const createUrl = () => {
-        const baseUrl = `${base_url}/leads`;
+        const baseUrl = `${base_url}/leads/all`;
         const queryString = params.toString();
         return `${baseUrl}?${queryString}`;
     };
@@ -44,7 +45,7 @@ export default function Dashboard() {
                 <div className="row gap-2 m-0">
                     <DesktopSidebar sidebarList={sidebarList} />
                     {/* Main content */}
-                    <section className="content px-4 p-md-3  col-md-9">
+                    <section className="content px-4 p-md-3  col-md-9 mt-md-0 mt-3">
                         <div className="row g-2">
                             <div className="col-md-6">
                                 <div>
@@ -55,7 +56,13 @@ export default function Dashboard() {
                                         >
                                             Filter Leads:
                                         </label>
-                                        <button className="btn btn-sm btn-success align-self-start">
+                                        <button
+                                            className="btn btn-sm btn-success align-self-start"
+                                            onClick={() =>
+                                                navigate("/lead/add")
+                                            }
+                                        >
+                                            <i className="bi bi-plus-circle"></i>{" "}
                                             Add New Lead
                                         </button>
                                     </div>
@@ -117,25 +124,32 @@ export default function Dashboard() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {leadList.map((lead, index) => (
-                                                    <tr key={index}>
-                                                        <td>
-                                                            <Link
-                                                                className="text-decoration-none"
-                                                                to={`/lead/${lead._id}`}
+                                                {leadList?.map(
+                                                    (lead, index) => (
+                                                        <tr key={index}>
+                                                            <td
+                                                                className="link-hover"
+                                                                onClick={() =>
+                                                                    navigate(
+                                                                        `/lead/${lead._id}`
+                                                                    )
+                                                                }
                                                             >
                                                                 {lead.name}
-                                                            </Link>
-                                                        </td>
-                                                        <td>{lead.status}</td>
-                                                        <td>
-                                                            {
-                                                                lead.salesAgent
-                                                                    .name
-                                                            }
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                            </td>
+                                                            <td>
+                                                                {lead.status}
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    lead
+                                                                        .salesAgent
+                                                                        .name
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                )}
                                             </tbody>
                                         </table>
                                     </div>

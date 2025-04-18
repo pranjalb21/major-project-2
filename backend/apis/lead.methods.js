@@ -7,6 +7,7 @@ import { z } from "zod";
 export const createLead = async (req, res) => {
     try {
         // Validate request body using Zod schema
+        console.log(req.body);
         const parsedData = leadSchema.parse(req.body);
 
         // Check if salesAgent exists in the database
@@ -181,6 +182,32 @@ export const deleteLead = async (req, res) => {
     }
 };
 
+export const getLeadById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const lead = await Lead.findById(id).populate("salesAgent");
+
+        // Check if Lead exists
+        if (!lead) {
+            return res.status(404).json({
+                error: "Lead with the provided ID not found.",
+            });
+        }
+
+        res.status(200).json({
+            message: "Lead fetched.",
+            data: lead,
+        });
+    } catch (error) {
+        console.error("Error in GET /:", error);
+        res.status(500).json({
+            error: "Internal server error.",
+            details: error.message,
+        });
+    }
+};
+
 export const getLeadStatusCount = async (req, res) => {
     try {
         // ["New", "Contacted", "Qualified", "Proposal Sent", "Closed"
@@ -195,6 +222,7 @@ export const getLeadStatusCount = async (req, res) => {
             status: "Proposal Sent",
         });
         const closedLeads = await Lead.countDocuments({ status: "Closed" });
+
         res.status(200).json({
             message: "Lead status count fetched.",
             data: {

@@ -2,6 +2,7 @@ import express from "express";
 import {
     createLead,
     deleteLead,
+    getLeadById,
     getLeads,
     getLeadStatusCount,
     updateLead,
@@ -13,9 +14,10 @@ export const router = express.Router();
 // POST endpoints
 router
     .post("/", createLead)
-    .get("/", getLeads)
-    .put("/:id", updateLead)
+    .get("/all", getLeads)
+    .get("/statuscount", getLeadStatusCount)
+    .get("/get/:id", getLeadById)
+    .put("/update/:id", updateLead)
     .delete("/:id", deleteLead)
     .post("/:id/comments", addComment)
     .get("/:id/comments", getComments)
-    .get("/statuscount", getLeadStatusCount)
