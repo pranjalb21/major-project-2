@@ -6,7 +6,7 @@ import MobileSidebar from "../components/MobileSidebar";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 
-export default function Dashboard() {
+export default function DashboardPage() {
     const navigate = useNavigate();
     const {
         leadList,

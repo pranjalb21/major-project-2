@@ -10,7 +10,7 @@ export default function LeadForm() {
     const defaultLead = {
         name: "",
         source: "Website",
-        salesAgent: agentList[0] || {},
+        salesAgent: agentList?.length > 0 ? agentList[0] : {},
         status: "New",
         tags: [],
         timeToClose: 0,

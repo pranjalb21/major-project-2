@@ -1,8 +1,10 @@
 import express from "express";
-import { createSalesAgent, getSalesAgents } from "../apis/salesAgent.methods.js";
+import { createSalesAgent, getSalesAgentById, getSalesAgents, updateSalesAgent } from "../apis/salesAgent.methods.js";
 
 export const router = express.Router();
 
 router
     .get("/", getSalesAgents)
-    .post("/", createSalesAgent);
+    .get("/:id", getSalesAgentById)
+    .post("/", createSalesAgent)
+    .put("/:id", updateSalesAgent);

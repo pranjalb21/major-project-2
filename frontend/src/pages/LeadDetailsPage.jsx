@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 
-export default function LeadDetails() {
+export default function LeadDetailsPage() {
     const { sidebarList, fetchLead, selectedLead, loading, deleteLead } =
         useLead();
     const navigate = useNavigate();

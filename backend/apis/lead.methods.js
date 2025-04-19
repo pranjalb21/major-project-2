@@ -7,13 +7,15 @@ import { z } from "zod";
 export const createLead = async (req, res) => {
     try {
         // Validate request body using Zod schema
-        console.log(req.body);
+        // console.log(req.body,'hi');
         const parsedData = leadSchema.parse(req.body);
 
         // Check if salesAgent exists in the database
         const existingSalesAgent = await SalesAgent.findById(
             parsedData.salesAgent
         );
+        // console.log(existingSalesAgent);
+
         if (!existingSalesAgent) {
             return res.status(404).json({
                 error: "Sales agent with the provided ID not found.",
@@ -22,6 +24,7 @@ export const createLead = async (req, res) => {
 
         // Create a new lead
         const createdLead = await Lead.create(parsedData);
+        // console.log(createdLead);
 
         // Check if Lead creation failed
         if (!createdLead) {

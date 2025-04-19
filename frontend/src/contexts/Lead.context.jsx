@@ -22,7 +22,7 @@ export const LeadProvider = ({ children }) => {
 
     const sidebarList = [
         { name: "Leads", link: "/" },
-        { name: "Sales", link: "/sales" },
+        // { name: "Sales", link: "/sales" },
         { name: "Agents", link: "/agents" },
         { name: "Reports", link: "/reports" },
     ];
@@ -109,6 +109,66 @@ export const LeadProvider = ({ children }) => {
             });
     };
 
+    const fetchAgent = async (id) => {
+        setLoading(true);
+        const agent = await fetch(`${base_url}/agents/${id}`)
+            .then((res) => res.json())
+            .then((data) => data.data)
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+        return agent;
+    };
+
+    const updateAgent = async (id, agentData) => {
+        setLoading(true);
+        await fetch(`${base_url}/agents/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(agentData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setAgentList((prev) =>
+                    prev.map((agent) => (agent._id === id ? data.data : agent))
+                );
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    const addAgent = async (agentData) => {
+        setLoading(true);
+        await fetch(`${base_url}/agents`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(agentData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setAgentList((prev) => [...prev, data.data]);
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
     const addLead = async (leadData) => {
         setLoading(true);
         // console.log(leadData);
@@ -166,9 +226,7 @@ export const LeadProvider = ({ children }) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                setLeadList((prev) =>
-                    prev.filter((lead) => lead._id !== id)
-                );
+                setLeadList((prev) => prev.filter((lead) => lead._id !== id));
                 fetchLeadStatusCount();
                 // console.log(data.data);
             })
@@ -178,7 +236,7 @@ export const LeadProvider = ({ children }) => {
             .finally(() => {
                 setLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         fetchLeadStatusCount();
@@ -201,7 +259,10 @@ export const LeadProvider = ({ children }) => {
                 selectedLead,
                 addLead,
                 updateLead,
-                deleteLead
+                deleteLead,
+                fetchAgent,
+                updateAgent,
+                addAgent,
             }}
         >
             {children}
