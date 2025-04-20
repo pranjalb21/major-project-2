@@ -7,6 +7,13 @@ export default function DesktopSidebar({ sidebarList }) {
             {/* Side bar */}
             <nav className="sidebar d-none d-md-block col-md-2">
                 <ul className="sidebar-list">
+                    {window.location.pathname !== "/" && (
+                        <li className="list-unstyled mt-2">
+                            <NavLink to="/">
+                                &larr;<small> Dashboard</small>
+                            </NavLink>
+                        </li>
+                    )}
                     {sidebarList.map((item, index) => (
                         <NavLink
                             to={item.link}

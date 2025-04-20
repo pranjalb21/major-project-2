@@ -34,6 +34,13 @@ export default function MobileSidebar({ sidebarList }) {
                 </div>
                 <div className="offcanvas-body">
                     <ul className="sidebar-list">
+                        {window.location.pathname !== "/" && (
+                            <li className="list-unstyled mt-2">
+                                <NavLink to="/">
+                                    &larr;<small> Dashboard</small>
+                                </NavLink>
+                            </li>
+                        )}
                         {sidebarList.map((item, index) => (
                             <NavLink
                                 to={item.link}

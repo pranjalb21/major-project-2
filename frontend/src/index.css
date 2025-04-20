@@ -1,3 +1,16 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+main {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.content {
+    overflow-x: auto;
+}
+
 .sidebar-list {
     padding-inline-start: 0;
     width: 10rem;
@@ -26,13 +39,25 @@
     width: 100%;
     list-style: none;
 }
+.list-lead-status .active {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    color: darkslategray;
+}
 .list-lead-status-item {
     display: inline-block;
     text-decoration: none;
     padding: 0.5rem 0.6rem;
+    cursor: pointer;
+    margin: 0 0.2rem;
+}
+.list-lead-status-item:hover {
+    background-color: #f0f0f0;
+    border-radius: 0.2rem;
+    color: darkslategray;
 }
 .list-lead-status-item:first-child {
-    padding-left: 0;
+    margin-left: -0.5rem;
 }
 .sidebar-list .active .sidebar-list-item {
     color: rgb(241, 46, 46);
@@ -54,4 +79,58 @@
 }
 .link-hover:hover {
     text-decoration: underline;
+}
+
+.responsive-canvas {
+    width: 100%;
+    height: auto; /* Maintains aspect ratio */
+    max-width: 300px; /* Restrict maximum width */
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 400px; /* Restrict maximum width of container */
+    margin: auto; /* Center container */
+}
+
+.legend {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column; /* Stack legend items vertically */
+    align-items: center; /* Align items to the left */
+    width: 100%; /* Match container width */
+}
+
+.legend div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend span {
+    margin-right: 10px;
+    border: 1px solid #000;
+}
+
+@media (max-width: 1200px) {
+    .responsive-canvas {
+        max-width: 75%; /* Adjust width for smaller screens */
+    }
+    .chart-container {
+        max-width: 100%;
+    }
+    .legend {
+        font-size: 14px; /* Reduce font size for smaller screens */
+    }
+}
+@media (max-width: 768px) {
+    .responsive-canvas {
+        max-width: 50%; /* Adjust width for smaller screens */
+    }
+    .chart-container {
+        max-width: 100%;
+    }
+    .legend {
+        font-size: 14px; /* Reduce font size for smaller screens */
+    }
 }

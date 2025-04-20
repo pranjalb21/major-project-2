@@ -6,7 +6,9 @@ import Comment from "../models/comment.models.js";
 export const addComment = async (req, res) => {
     try {
         const { id } = req.params;
+
         const parsedData = comentSchema.parse(req.body);
+
         const leadData = await Lead.findById(id);
         if (!leadData) {
             return res.status(404).json({ message: "Lead not found." });
@@ -54,13 +56,12 @@ export const getComments = async (req, res) => {
         if (!leadData) {
             return res.status(404).json({ message: "Lead not found." });
         }
-        const comments = await Comment.find({ lead: leadData._id }).populate({
-            path: "author",
-            select: "name -_id",
-        });
-        if (!comments.length) {
-            return res.status(404).json({ message: "No comments found." });
-        }
+        const comments = await Comment.find({ lead: leadData._id })
+            .populate({
+                path: "author",
+                select: "name -_id",
+            })
+            .sort({ createdAt: -1 });
         let commentsData = comments.map((comment) => ({
             author: comment.author.name,
             commentText: comment.commentText,

@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
-import Navbar from "../components/Navbar";
-import DesktopSidebar from "../components/DesktopSidebar";
+import { useNavigate } from "react-router-dom";
 import useLead from "../contexts/Lead.context";
 import { base_url } from "../constants/constants";
-import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import DesktopSidebar from "../components/DesktopSidebar";
 
-export default function DashboardPage() {
+export default function LeadPage() {
+    const navigate = useNavigate();
     const {
-        sidebarList,
-        leadStatusCount,
-        loading,
         leadList,
+        loading,
+        status,
+        setFilters,
         fetchLeads,
         params,
-        setFilters,
+        fetchLeadStatusCount,
+        leadStatusCount,
+        sidebarList,
     } = useLead();
-    const navigate = useNavigate();
+
     const createUrl = () => {
         const baseUrl = `${base_url}/leads/all`;
         const queryString = params.toString();
@@ -31,68 +34,59 @@ export default function DashboardPage() {
     useEffect(() => {
         loadProducts();
     }, []);
-    const handleActiveStatus = (e) => {
-        const items = document.querySelectorAll(".list-lead-status-item");
-        items.forEach((item) => item.classList.remove("active"));
-        e.currentTarget.classList.add("active");
-        setFilters({ status: e.currentTarget.innerText.split(":")[0] });
-    };
     return (
         <>
-            <Navbar
-                sidebarList={sidebarList}
-                navbarText={`Anvaya CRM Dashboard`}
-            />
+            <Navbar sidebarList={sidebarList} navbarText={`Lead List`} />
             <main className="w-100">
                 <div className="row gap-2 m-0">
                     <DesktopSidebar sidebarList={sidebarList} />
                     {/* Main content */}
                     <section className="content px-4 p-md-3  col-md-9 mt-md-0 mt-3">
-                        <div className="col-md-6">
-                            <h5 className="fs-5">Lead Status: </h5>
-                            <ul className="list-lead-status">
-                                <li
-                                    className="list-lead-status-item active"
-                                    onClick={handleActiveStatus}
-                                >
-                                    All:{" "}
-                                    <span>{leadStatusCount?.openLeads}</span>
-                                </li>
-                                <li
-                                    className="list-lead-status-item"
-                                    onClick={handleActiveStatus}
-                                >
-                                    New:{" "}
-                                    <span>{leadStatusCount?.newLeads}</span>
-                                </li>
-                                <li
-                                    className="list-lead-status-item"
-                                    onClick={handleActiveStatus}
-                                >
-                                    Contacted:{" "}
-                                    <span>
-                                        {leadStatusCount?.contactedLeads}
-                                    </span>
-                                </li>
-                                <li
-                                    className="list-lead-status-item"
-                                    onClick={handleActiveStatus}
-                                >
-                                    Qualified:{" "}
-                                    <span>
-                                        {leadStatusCount?.qualifiedLeads}
-                                    </span>
-                                </li>
-                                <li
-                                    className="list-lead-status-item"
-                                    onClick={handleActiveStatus}
-                                >
-                                    Proposal Sent:{" "}
-                                    <span>
-                                        {leadStatusCount?.proposalSentLeads}
-                                    </span>
-                                </li>
-                            </ul>
+                        <div className="row g-2">
+                            <div className="col-md-6">
+                                <div>
+                                    <div className="d-flex justify-content-between align-items-center mb-1 p-1">
+                                        <label
+                                            htmlFor="filter"
+                                            className="form-label"
+                                        >
+                                            Filter Leads:
+                                        </label>
+                                        <button
+                                            className="btn btn-sm btn-success align-self-start"
+                                            onClick={() =>
+                                                navigate("/lead/add")
+                                            }
+                                        >
+                                            <i className="bi bi-plus-circle"></i>{" "}
+                                            Add New Lead
+                                        </button>
+                                    </div>
+                                    <select
+                                        name="filter"
+                                        id="filter"
+                                        className="form-select"
+                                        value={status}
+                                        onChange={(e) =>
+                                            setFilters({
+                                                status: e.target.value,
+                                            })
+                                        }
+                                    >
+                                        <option value="All">All</option>
+                                        <option value="New">New</option>
+                                        <option value="Contacted">
+                                            Contacted
+                                        </option>
+                                        <option value="Qualified">
+                                            Qualified
+                                        </option>
+                                        <option value="Proposal Sent">
+                                            Proposal Sent
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         {!loading &&
                             (leadList?.length > 0 ? (

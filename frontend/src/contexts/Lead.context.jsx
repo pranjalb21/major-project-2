@@ -11,6 +11,7 @@ export const LeadProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [leadList, setLeadList] = useState([]);
     const [selectedLead, setSelectedLead] = useState(null);
+    const [selectedLeadComments, setSelectedLeadComments] = useState(null);
     const [agentList, setAgentList] = useState([]);
     const [leadStatusCount, setLeadStatusCount] = useState({
         newLeads: 0,
@@ -18,10 +19,12 @@ export const LeadProvider = ({ children }) => {
         qualifiedLeads: 0,
         proposalSentLeads: 0,
         closedLeads: 0,
+        openLeads: 0,
+        totalLeads: 0,
     });
 
     const sidebarList = [
-        { name: "Leads", link: "/" },
+        { name: "Leads", link: "/leads" },
         // { name: "Sales", link: "/sales" },
         { name: "Agents", link: "/agents" },
         { name: "Reports", link: "/reports" },
@@ -238,6 +241,47 @@ export const LeadProvider = ({ children }) => {
             });
     };
 
+    const getComment = async (leadId) => {
+        setLoading(true);
+        setSelectedLeadComments(null);
+        await fetch(`${base_url}/leads/${leadId}/comments`)
+            .then((res) => res.json())
+            .then((data) => {
+                setSelectedLeadComments(data.data);
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+    const addComment = async (leadId, comment) => {
+        setLoading(true);
+        // console.log(leadId, comment);
+        // console.log(`${base_url}/leads/${leadId}/comments`);
+
+        await fetch(`${base_url}/leads/${leadId}/comments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(comment),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setSelectedLeadComments((prev) => [data.data, ...prev]);
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
     useEffect(() => {
         fetchLeadStatusCount();
     }, []);
@@ -263,6 +307,9 @@ export const LeadProvider = ({ children }) => {
                 fetchAgent,
                 updateAgent,
                 addAgent,
+                getComment,
+                selectedLeadComments,
+                addComment,
             }}
         >
             {children}

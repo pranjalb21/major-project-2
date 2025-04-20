@@ -234,6 +234,17 @@ export const getLeadStatusCount = async (req, res) => {
                 qualifiedLeads,
                 proposalSentLeads,
                 closedLeads,
+                openLeads:
+                    newLeads +
+                    contactedLeads +
+                    qualifiedLeads +
+                    proposalSentLeads,
+                totalLeads:
+                    newLeads +
+                    contactedLeads +
+                    qualifiedLeads +
+                    proposalSentLeads +
+                    closedLeads,
             },
         });
     } catch (error) {

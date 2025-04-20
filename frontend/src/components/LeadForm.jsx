@@ -74,10 +74,6 @@ export default function LeadForm() {
             <div className="col-sm-12">
                 <div className="card mb-3 shadow-sm border-1 border-primary-subtle">
                     <div className="card-body">
-                        <h3 className="card-title text-center fs-3">
-                            {leadId ? "Edit" : "Add"} Lead
-                        </h3>
-
                         <form className="row g-3 mt-2" onSubmit={handleSubmit}>
                             <div className="col-md-12">
                                 <label htmlFor="name" className="form-label">
@@ -276,14 +272,11 @@ export default function LeadForm() {
                                     type="button"
                                     className="w-100 btn btn-outline-danger"
                                     onClick={() =>
-                                        navigate(
-                                            `/${
-                                                leadId ? `lead/${leadId}` : ""
-                                            }`,
-                                            {
-                                                replace: true,
-                                            }
-                                        )
+                                        leadId
+                                            ? navigate(`/lead/${leadId}`, {
+                                                  replace: true,
+                                              })
+                                            : navigate("/leads")
                                     }
                                 >
                                     Cancel
