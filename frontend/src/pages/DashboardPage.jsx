@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 import useLead from "../contexts/Lead.context";
-import { base_url } from "../constants/constants";
+import { base_url, title } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
@@ -29,6 +29,7 @@ export default function DashboardPage() {
         loadProducts();
     }, [params]);
     useEffect(() => {
+        document.title = `${title} | Dashboard`
         loadProducts();
     }, []);
     const handleActiveStatus = (e) => {

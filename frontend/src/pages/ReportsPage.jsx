@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 import useLead from "../contexts/Lead.context";
+import { title } from "../constants/constants";
 
 export default function ReportsPage() {
     const { sidebarList, leadStatusCount } = useLead();
@@ -78,6 +79,9 @@ export default function ReportsPage() {
         handleClosedPipeline();
         handleLeadsChart();
     }, [leadStatusCount]);
+    useEffect(() => {
+        document.title = `${title} | Report`;
+    }, []);
 
     return (
         <>
@@ -90,7 +94,9 @@ export default function ReportsPage() {
                     <DesktopSidebar sidebarList={sidebarList} />
                     {/* Main content */}
                     <section className="content px-4 p-md-3  col-md-9 mt-md-0 mt-3 mb-5 row">
-                        <h3 className="fs-3 text-center text-decoration-underline mb-2">Report Overview</h3>
+                        <h3 className="fs-3 text-center text-decoration-underline mb-2">
+                            Report Overview
+                        </h3>
                         <div className="col-md-6">
                             <div className="d-flex flex-column align-items-center flex-wrap">
                                 <div className="">

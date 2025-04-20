@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 import useLead from "../contexts/Lead.context";
 import SalesAgentForm from "../components/SalesAgentForm";
+import { title } from "../constants/constants";
 
 export default function AgentAddPage() {
     const { sidebarList } = useLead();
+    useEffect(() => {
+        document.title = `${title} | Add Agent`;
+    }, []);
     return (
         <>
             <Navbar sidebarList={sidebarList} navbarText={`Add Agent`} />

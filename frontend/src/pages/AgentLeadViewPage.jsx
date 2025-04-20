@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useLead from "../contexts/Lead.context";
-import { base_url } from "../constants/constants";
+import { base_url, title } from "../constants/constants";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 
@@ -45,6 +45,8 @@ export default function AgentLeadViewPage() {
     useEffect(() => {
         loadDetails();
         loadAgent();
+        document.title = `${title} | Agent Leads`;
+
         // console.log(selectedAgentLe
     }, []);
     return (

@@ -22,6 +22,7 @@ app.use("/api/v1/leads", leadRouter);
 app.use("/api/v1/agents", salesAgentRouter);
 app.use("/api/v1/reports", reportRouter);
 
+app.get("/", (_, res) => res.status(200).json({ message: "Major Project 2" }));
 initializeDB();
 app.listen(PORT, () => {
     console.log(`Server running on Port:`, PORT);

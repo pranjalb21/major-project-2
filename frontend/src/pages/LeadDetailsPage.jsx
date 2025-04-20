@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 import CommentForm from "../components/CommentForm";
+import { title } from "../constants/constants";
 
 export default function LeadDetailsPage() {
     const {
@@ -36,6 +37,9 @@ export default function LeadDetailsPage() {
         fetchLead(leadId);
         getComment(leadId);
     }, [leadId]);
+    useEffect(() => {
+        document.title = `${title} | Lead Details`;
+    }, []);
     return (
         <>
             <Navbar

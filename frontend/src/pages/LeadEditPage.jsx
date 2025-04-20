@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LeadForm from "../components/LeadForm";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 import useLead from "../contexts/Lead.context";
+import { title } from "../constants/constants";
 
 export default function LeadEditPage() {
     const { sidebarList } = useLead();
-
+    useEffect(() => {
+        document.title = `${title} | Edit Lead`;
+    }, []);
     return (
         <>
             <Navbar sidebarList={sidebarList} navbarText={`Edit Lead`} />

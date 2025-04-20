@@ -3,12 +3,14 @@ import DesktopSidebar from "../components/DesktopSidebar";
 import useLead from "../contexts/Lead.context";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
+import { title } from "../constants/constants";
 
 export default function AgentsPage() {
     const { sidebarList, loading, agentList, fetchAgents } = useLead();
     const navigate = useNavigate();
     useEffect(() => {
         fetchAgents();
+        document.title = `${title} | Agent`;
     }, []);
     return (
         <>
