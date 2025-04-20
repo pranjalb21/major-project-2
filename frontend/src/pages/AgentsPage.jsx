@@ -12,7 +12,7 @@ export default function AgentsPage() {
     }, []);
     return (
         <>
-            <Navbar sidebarList={sidebarList} navbarText={`Agent Dashboard`} />
+            <Navbar sidebarList={sidebarList} navbarText={`Agent List`} />
             <main className="w-100">
                 <div className="row gap-2 m-0">
                     <DesktopSidebar sidebarList={sidebarList} />
@@ -33,10 +33,17 @@ export default function AgentsPage() {
                                             className="col-sm-6"
                                             key={agent._id}
                                         >
-                                            <div className="card mb-3 shadow-sm border-1 border-primary-subtle">
+                                            <div className="card mb-3 shadow-sm border-1 border-primary-subtle card-hover-container">
                                                 <div className="card-body">
                                                     <div className="d-flex justify-content-between align-items-center ">
-                                                        <h5 className="card-title">
+                                                        <h5
+                                                            className="card-title card-hover-text"
+                                                            onClick={() =>
+                                                                navigate(
+                                                                    `/agent/${agent._id}`
+                                                                )
+                                                            }
+                                                        >
                                                             {agent.name}
                                                         </h5>
                                                         <Link

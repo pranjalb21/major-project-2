@@ -72,10 +72,6 @@ const SalesAgentForm = () => {
             <div className="col-sm-12">
                 <div className="card mb-3 shadow-sm border-1 border-primary-subtle">
                     <div className="card-body">
-                        <h3 className="card-title text-center fs-3">
-                            {agentId ? "Edit" : "Add"} Agent
-                        </h3>
-
                         <form onSubmit={handleSubmit} className="row g-3 mt-2">
                             <div className="col-md-6">
                                 <label htmlFor="name" className="form-label">

@@ -8,7 +8,7 @@ export default function AgentEditPage() {
     const {sidebarList} = useLead();
     return (
         <>
-            <Navbar sidebarList={sidebarList} navbarText={`Edit Lead`} />
+            <Navbar sidebarList={sidebarList} navbarText={`Edit Agent`} />
             <main className="w-100">
                 <div className="row gap-2 m-0">
                     <DesktopSidebar sidebarList={sidebarList} />

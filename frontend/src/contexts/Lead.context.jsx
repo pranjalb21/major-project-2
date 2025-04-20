@@ -13,6 +13,7 @@ export const LeadProvider = ({ children }) => {
     const [selectedLead, setSelectedLead] = useState(null);
     const [selectedLeadComments, setSelectedLeadComments] = useState(null);
     const [agentList, setAgentList] = useState([]);
+    const [selectedAgentLeads, setSelectedAgentLeads] = useState([]);
     const [leadStatusCount, setLeadStatusCount] = useState({
         newLeads: 0,
         contactedLeads: 0,
@@ -30,14 +31,24 @@ export const LeadProvider = ({ children }) => {
         { name: "Reports", link: "/reports" },
     ];
     const [params, setParams] = useSearchParams();
-    const status = params.get("status") || "All";
+    const status = params.get("status") || undefined;
+    const sortOrder = params.get("sortOrder") || undefined;
 
     const setFilters = (filter) => {
         setParams((params) => {
-            if (filter.status !== "") {
-                params.set("status", filter.status);
-            } else {
-                params.delete("status");
+            if (filter.status !== undefined) {
+                if (filter.status === "") {
+                    params.delete("status");
+                } else {
+                    params.set("status", filter.status);
+                }
+            }
+            if (filter.sortOrder !== undefined) {
+                if (filter.sortOrder === "") {
+                    params.delete("sortOrder");
+                } else {
+                    params.set("sortOrder", filter.sortOrder);
+                }
             }
             return params;
         });
@@ -124,6 +135,23 @@ export const LeadProvider = ({ children }) => {
                 setLoading(false);
             });
         return agent;
+    };
+
+    const fetchSelectedAgentLeads = async (url) => {
+        setLoading(true);
+        setSelectedAgentLeads([]);
+        await fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                setSelectedAgentLeads(data.data);
+                // console.log(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     const updateAgent = async (id, agentData) => {
@@ -310,6 +338,9 @@ export const LeadProvider = ({ children }) => {
                 getComment,
                 selectedLeadComments,
                 addComment,
+                sortOrder,
+                fetchSelectedAgentLeads,
+                selectedAgentLeads,
             }}
         >
             {children}

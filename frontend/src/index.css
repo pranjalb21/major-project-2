@@ -134,3 +134,9 @@ main {
         font-size: 14px; /* Reduce font size for smaller screens */
     }
 }
+.card-hover-text{
+    cursor: pointer;
+}
+.card-hover-text:hover{
+    text-decoration: underline;
+}

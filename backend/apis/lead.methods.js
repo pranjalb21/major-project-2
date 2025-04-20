@@ -57,7 +57,7 @@ export const createLead = async (req, res) => {
 
 export const getLeads = async (req, res) => {
     try {
-        const { salesAgent, status, tags, source } = req.query;
+        const { salesAgent, status, tags, source, sortOrder } = req.query;
         let query = {};
 
         if (salesAgent) {
@@ -84,8 +84,17 @@ export const getLeads = async (req, res) => {
         if (source) {
             query.source = source;
         }
+        let agents;
+        if (sortOrder) {
+            const sortOrderValue = sortOrder === "desc" ? -1 : 1;
+            // console.log(sortOrderValue);
 
-        const agents = await Lead.find(query).populate("salesAgent");
+            agents = await Lead.find(query)
+                .populate("salesAgent")
+                .sort({ timeToClose: sortOrderValue });
+        } else {
+            agents = await Lead.find(query).populate("salesAgent");
+        }
 
         // Return the list of agents.
         return res.status(200).json({ data: agents });
@@ -249,6 +258,42 @@ export const getLeadStatusCount = async (req, res) => {
         });
     } catch (error) {
         console.error("Error in GET /lead-status-count:", error);
+        res.status(500).json({
+            error: "Internal server error.",
+            details: error.message,
+        });
+    }
+};
+
+export const getLeadsByAgentId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status, sortOrder } = req.query;
+        let query = {};
+
+        query.salesAgent = id;
+
+        if (status) {
+            if (status !== "All") {
+                query.status = status;
+            }
+        }
+        let agents;
+        if (sortOrder) {
+            const sortOrderValue = sortOrder === "desc" ? -1 : 1;
+            // console.log(sortOrderValue);
+
+            agents = await Lead.find(query)
+                .populate("salesAgent")
+                .sort({ timeToClose: sortOrderValue });
+        } else {
+            agents = await Lead.find(query).populate("salesAgent");
+        }
+
+        // Return the list of agents.
+        return res.status(200).json({ data: agents });
+    } catch (error) {
+        console.error("Error in GET /LeadsByAgentId:", error);
         res.status(500).json({
             error: "Internal server error.",
             details: error.message,

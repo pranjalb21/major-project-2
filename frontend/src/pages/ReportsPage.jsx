@@ -89,127 +89,144 @@ export default function ReportsPage() {
                 <div className="row gap-2 m-0">
                     <DesktopSidebar sidebarList={sidebarList} />
                     {/* Main content */}
-                    <section className="content px-4 p-md-3  col-md-9 mt-md-0 mt-3 mb-5">
-                        <h3 className="fs-3 text-center">Report Overview</h3>
-
-                        <div className="row g-2 align-items-center justify-content-center mt-2">
-                            <div className="col-md-6">
-                                <p className="text-center ">
-                                    Total Leads closed and in Pipeline:
-                                </p>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="chart-container d-flex flex-column align-items-center">
-                                    <canvas
-                                        id="closedPipeline"
-                                        className="responsive-canvas"
-                                    ></canvas>
-                                    {/* Add Legend Here */}
-                                    <div className="legend">
-                                        <div className="d-flex flex-column align-items-start">
-                                            <div>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "20px",
-                                                        height: "20px",
-                                                        backgroundColor:
-                                                            "#FF6384",
-                                                    }}
-                                                ></span>
-                                                Total Leads:{" "}
-                                                {leadStatusCount?.totalLeads}
-                                            </div>
-                                            <div>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "20px",
-                                                        height: "20px",
-                                                        backgroundColor:
-                                                            "#36A2EB",
-                                                    }}
-                                                ></span>
-                                                Closed Leads:{" "}
-                                                {leadStatusCount?.closedLeads}
+                    <section className="content px-4 p-md-3  col-md-9 mt-md-0 mt-3 mb-5 row">
+                        <h3 className="fs-3 text-center text-decoration-underline mb-2">Report Overview</h3>
+                        <div className="col-md-6">
+                            <div className="d-flex flex-column align-items-center flex-wrap">
+                                <div className="">
+                                    <p className="text-center ">
+                                        Total Leads closed and in Pipeline:
+                                    </p>
+                                </div>
+                                <div className="">
+                                    <div className="chart-container d-flex flex-column align-items-center">
+                                        <canvas
+                                            id="closedPipeline"
+                                            className="responsive-canvas"
+                                            width={"300"}
+                                            height={"300"}
+                                        ></canvas>
+                                        {/* Add Legend Here */}
+                                        <div className="legend">
+                                            <div className="d-flex flex-column align-items-start">
+                                                <div>
+                                                    <span
+                                                        style={{
+                                                            display:
+                                                                "inline-block",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundColor:
+                                                                "#FF6384",
+                                                        }}
+                                                    ></span>
+                                                    Total Leads:{" "}
+                                                    {
+                                                        leadStatusCount?.totalLeads
+                                                    }
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        style={{
+                                                            display:
+                                                                "inline-block",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundColor:
+                                                                "#36A2EB",
+                                                        }}
+                                                    ></span>
+                                                    Closed Leads:{" "}
+                                                    {
+                                                        leadStatusCount?.closedLeads
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row g-2 align-items-center justify-content-center mt-2">
-                            <div className="col-md-6">
-                                <p className="text-center ">
-                                    Lead Status Distribution:
-                                </p>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="chart-container d-flex flex-column align-items-center">
-                                    <canvas
-                                        id="leadsChart"
-                                        className="responsive-canvas"
-                                    ></canvas>
-                                    {/* Add Legend Here */}
-                                    <div className="legend">
-                                        <div className="d-flex flex-column align-items-start">
-                                            <div>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "20px",
-                                                        height: "20px",
-                                                        backgroundColor:
-                                                            "#FF6384",
-                                                    }}
-                                                ></span>
-                                                New Leads:{" "}
-                                                {leadStatusCount?.newLeads}
-                                            </div>
-                                            <div>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "20px",
-                                                        height: "20px",
-                                                        backgroundColor:
-                                                            "#36A2EB",
-                                                    }}
-                                                ></span>
-                                                Contacted Leads:{" "}
-                                                {
-                                                    leadStatusCount?.contactedLeads
-                                                }
-                                            </div>
-                                            <div>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "20px",
-                                                        height: "20px",
-                                                        backgroundColor:
-                                                            "#FFCE56",
-                                                    }}
-                                                ></span>
-                                                Qualified Leads:{" "}
-                                                {
-                                                    leadStatusCount?.qualifiedLeads
-                                                }
-                                            </div>
-                                            <div>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "20px",
-                                                        height: "20px",
-                                                        backgroundColor:
-                                                            "#4BC0C0",
-                                                    }}
-                                                ></span>
-                                                Proposal Sent Leads:{" "}
-                                                {
-                                                    leadStatusCount?.proposalSentLeads
-                                                }
+                        <div className="col-md-6">
+                            <div className="d-flex flex-column align-items-center flex-wrap">
+                                <div className="">
+                                    <p className="text-center ">
+                                        Lead Status Distribution:
+                                    </p>
+                                </div>
+                                <div className="">
+                                    <div className="chart-container d-flex flex-column align-items-center">
+                                        <canvas
+                                            id="leadsChart"
+                                            className="responsive-canvas"
+                                            width={"300"}
+                                            height={"300"}
+                                        ></canvas>
+                                        {/* Add Legend Here */}
+                                        <div className="legend">
+                                            <div className="d-flex flex-column align-items-start">
+                                                <div>
+                                                    <span
+                                                        style={{
+                                                            display:
+                                                                "inline-block",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundColor:
+                                                                "#FF6384",
+                                                        }}
+                                                    ></span>
+                                                    New Leads:{" "}
+                                                    {leadStatusCount?.newLeads}
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        style={{
+                                                            display:
+                                                                "inline-block",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundColor:
+                                                                "#36A2EB",
+                                                        }}
+                                                    ></span>
+                                                    Contacted Leads:{" "}
+                                                    {
+                                                        leadStatusCount?.contactedLeads
+                                                    }
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        style={{
+                                                            display:
+                                                                "inline-block",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundColor:
+                                                                "#FFCE56",
+                                                        }}
+                                                    ></span>
+                                                    Qualified Leads:{" "}
+                                                    {
+                                                        leadStatusCount?.qualifiedLeads
+                                                    }
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        style={{
+                                                            display:
+                                                                "inline-block",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundColor:
+                                                                "#4BC0C0",
+                                                        }}
+                                                    ></span>
+                                                    Proposal Sent Leads:{" "}
+                                                    {
+                                                        leadStatusCount?.proposalSentLeads
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

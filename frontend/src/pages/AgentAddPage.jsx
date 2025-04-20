@@ -5,10 +5,10 @@ import useLead from "../contexts/Lead.context";
 import SalesAgentForm from "../components/SalesAgentForm";
 
 export default function AgentAddPage() {
-    const {sidebarList} = useLead();
+    const { sidebarList } = useLead();
     return (
         <>
-            <Navbar sidebarList={sidebarList} navbarText={`Agent Dashboard`} />
+            <Navbar sidebarList={sidebarList} navbarText={`Add Agent`} />
             <main className="w-100">
                 <div className="row gap-2 m-0">
                     <DesktopSidebar sidebarList={sidebarList} />

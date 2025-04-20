@@ -1,48 +1,71 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useLead from "../contexts/Lead.context";
 import { base_url } from "../constants/constants";
 import Navbar from "../components/Navbar";
 import DesktopSidebar from "../components/DesktopSidebar";
 
-export default function LeadPage() {
+export default function AgentLeadViewPage() {
     const navigate = useNavigate();
+    const [agent, setAgent] = useState("");
     const {
-        leadList,
+        fetchSelectedAgentLeads,
+        selectedAgentLeads,
         loading,
         status,
         setFilters,
-        fetchLeads,
         params,
-        fetchLeadStatusCount,
-        leadStatusCount,
         sidebarList,
         sortOrder,
+        fetchAgent,
     } = useLead();
-
+    const { id } = useParams();
     const createUrl = () => {
-        const baseUrl = `${base_url}/leads/all`;
+        const baseUrl = `${base_url}/leads/agent/${id}`;
+        // console.log(baseUrl);
+
         const queryString = params.toString();
         return `${baseUrl}?${queryString}`;
     };
-    const loadProducts = async () => {
+    const loadDetails = async () => {
         const url = createUrl();
-        await fetchLeads(url);
+        await fetchSelectedAgentLeads(url);
+    };
+    const loadAgent = async () => {
+        if (id) {
+            const agentdata = await fetchAgent(id);
+            // console.log(agentdata);
+
+            setAgent(agentdata);
+        }
     };
     useEffect(() => {
-        loadProducts();
+        loadDetails();
     }, [params]);
     useEffect(() => {
-        loadProducts();
+        loadDetails();
+        loadAgent();
+        // console.log(selectedAgentLe
     }, []);
     return (
         <>
-            <Navbar sidebarList={sidebarList} navbarText={`Lead List`} />
+            <Navbar
+                sidebarList={sidebarList}
+                navbarText={`Leads by Sales Agent`}
+            />
             <main className="w-100">
                 <div className="row gap-2 m-0">
                     <DesktopSidebar sidebarList={sidebarList} />
                     {/* Main content */}
                     <section className="content px-4 p-md-3  col-md-9 mt-md-0 mt-3">
+                        {agent && (
+                            <h4 className="fs-4">
+                                <span className="fw-normal">
+                                    Sales Agent -{" "}
+                                </span>
+                                {agent.name}
+                            </h4>
+                        )}
                         <div className="row g-2">
                             <div className="col-md-6">
                                 <div>
@@ -85,12 +108,13 @@ export default function LeadPage() {
                                         <option value="Proposal Sent">
                                             Proposal Sent
                                         </option>
+                                        <option value="Closed">Closed</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         {!loading &&
-                            (leadList?.length > 0 ? (
+                            (selectedAgentLeads?.length > 0 ? (
                                 <>
                                     <div className="table-responsive mt-2">
                                         <h2>Leads</h2>
@@ -134,7 +158,7 @@ export default function LeadPage() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {leadList?.map(
+                                                {selectedAgentLeads?.map(
                                                     (lead, index) => (
                                                         <tr key={index}>
                                                             <td

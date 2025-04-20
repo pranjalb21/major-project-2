@@ -4,6 +4,7 @@ import {
     deleteLead,
     getLeadById,
     getLeads,
+    getLeadsByAgentId,
     getLeadStatusCount,
     updateLead,
 } from "../apis/lead.methods.js";
@@ -21,3 +22,4 @@ router
     .delete("/:id", deleteLead)
     .post("/:id/comments", addComment)
     .get("/:id/comments", getComments)
+    .get("/agent/:id", getLeadsByAgentId);

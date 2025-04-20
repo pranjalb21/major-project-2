@@ -13,6 +13,7 @@ import AgentsPage from "./pages/AgentsPage";
 import AgentEditPage from "./pages/AgentEditPage";
 import AgentAddPage from "./pages/AgentAddPage";
 import LeadPage from "./pages/LeadPage";
+import AgentLeadViewPage from "./pages/AgentLeadViewPage";
 function App() {
     const { loading } = useLead();
     return (
@@ -28,6 +29,8 @@ function App() {
                 <Route path="/agents" element={<AgentsPage />} />
                 <Route path="/agent/edit/:id" element={<AgentEditPage />} />
                 <Route path="/agent/add" element={<AgentAddPage />} />
+                <Route path="/agent/:id" element={<AgentLeadViewPage />} />
+
                 <Route path="/reports" element={<ReportsPage />} />
             </Routes>
         </>
