@@ -153,7 +153,7 @@ export default function LeadDetailsPage() {
                                     <CommentForm />
                                 </div>
                             ) : (
-                                <p>Loading...</p>
+                                <p>Lead not found.</p>
                             ))}
                     </section>
                 </div>
