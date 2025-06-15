@@ -52,7 +52,7 @@ A basic Sales Management application built using MERN stack.
 1. **Clone the repository:**
 
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/pranjalb21/major-project-2
     cd Major_Project2
     ```
 
